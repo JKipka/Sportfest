@@ -120,14 +120,7 @@
                                 <li>Passwort: <input type="password" value="abcdefgh" readonly></li>
                                 <br>
                                 </p>
-                                <input type="button" class="btn btn-default" id="btn_submit" value="Password ändern" onclick="
-                               /** var element = document.getElementById('passwordChange');
-                                var style = window.getComputedStyle(element);
-                                var state = style.getPropertyValue('display');
-
-                                ShowPasswordChangeDiv(state)**/
-                                PromptPasswordNew();
-                                ">
+                                <input type="button" class="btn btn-default" id="btn_submit" value="Password ändern" onclick=window.open("http://localhost:8080/changePassword.jsp?user=${mail}");>
                                 <br>
                             </ul>
 
