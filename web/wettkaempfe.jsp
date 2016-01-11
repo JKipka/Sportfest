@@ -46,10 +46,32 @@
                     </ul>
                 </div> <!--Navi Bar Ende**-->
 
-                <div id="main_container" class="col-sm-8">
+                <div id="main_container" style="border-right-style: none" class="col-sm-9">
 
                     <div class="liste_wett">
                         <h2>Wettkämpfe</h2><br>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <a href="50meterergebnisse.jsp" class="thumbnail">
+                                    <p>50-Meter-Lauf</p>
+                                    <img src="50m.jpg" alt="50 Meter Lauf" style="width:200px;height:150px">
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="100meterergebnisse.jsp" class="thumbnail">
+                                    <p>100-Meter-Lauf</p>
+                                    <img src="100m.jpg" alt="100 Meter Lauf" style="width:200px;height:150px">
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="/weitsprungergebnisse.jsp" class="thumbnail">
+                                    <p>Weitwurf</p>
+                                    <img src="weitsprung.jpg" alt="Weitsprung" style="width:200px;height:150px">
+                                </a>
+                            </div>
+                        </div>
+                        <!--
                         <ul>
                             <li>50-Meter-Lauf</li>
                             <a href="50meterergebnisse.jsp">Zu den Ergebnissen</a>
@@ -62,28 +84,26 @@
                             <li>Weitsprung</li>
                             <a href="weitsprungergebnisse.jsp">Zu den Ergebnissen</a>
                             <br>
-
+                        -->
 
                         </ul>
                     </div>
                 </div>
 
-                <div id="sidebar" class="col-sm-4">
-                    <div id="header_sidebar">
-                        <h2 id="h2_news">Ergebnisse eintragen</h2>
-                    </div>
+                <div id="sidebar" class="col-sm-3">
 
-                    <div id="main_sidebar">
-                        <div class="artikel">
-                            <p>Um Ergebnisse eintragen zu können, müssen Sie ein Benutzerkonto besitzen.</p><br>
-
+                    <div>
+                        <div class="artikel" style="padding-top: 25px">
                             <form action="login_home.jsp">
-                                <button type="submit">Ergebnisse eintragen</button>
+                                <button class="btn btn-default" type="submit">Ergebnisse eintragen</button>
                             </form>
+                            <p>Um Ergebnisse eintragen zu können, müssen Sie ein Benutzerkonto besitzen.</p><br>
                         </div>
                     </div>
 
                 </div>
+
+            </div>
         </td>
     </tr>
 </table>

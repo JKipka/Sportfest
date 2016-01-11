@@ -94,6 +94,8 @@
                     </div>
 
                 </div>
+
+            </div>
         </td>
     </tr>
 </table>
