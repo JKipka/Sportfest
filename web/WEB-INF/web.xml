@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+    
+    <servlet>
+        <servlet-name>JDBC</servlet-name>
+        <servlet-class>Database.DBConnection</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>Anmelden</servlet-name>
+        <servlet-class>Database.Anmelden</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>CreateCookie</servlet-name>
+        <servlet-class>Database.CreateCookie</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>FiftyAdd</servlet-name>
+        <servlet-class>Database.FiftyAdd</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>HundertAdd</servlet-name>
+        <servlet-class>Database.HundertAdd</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>JDBC</servlet-name>
+        <url-pattern>/registrieren</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Anmelden</servlet-name>
+        <url-pattern>/anmelden</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CreateCookie</servlet-name>
+        <url-pattern>/createcookie</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>FiftyAdd</servlet-name>
+        <url-pattern>/fiftyadd</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>HundertAdd</servlet-name>
+        <url-pattern>/hundertadd</url-pattern>
+    </servlet-mapping>
+
+</web-app>
