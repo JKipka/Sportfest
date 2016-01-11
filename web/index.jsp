@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sportfest Zuckerberg 2016</title>
     <script type="text/javascript">
       function oeffnefenster (url) {
@@ -33,7 +34,15 @@
       }
     %>
   </head>
-  <link rel="stylesheet" href="http://localhost:88/sportfest/styles.css">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="http://localhost:8080/styles.css">
 
   <body>
   <table align="center">
@@ -61,7 +70,7 @@
             </ul>
           </div> <!--Navi Bar Ende**-->
 
-          <div id="main_container">
+          <div id="main_container" class="col-sm-8">
             <div id="main_artikel_container">
               <div class="artikel_main">
                 <h3>Lorem mfka</h3>
@@ -92,7 +101,7 @@
 
           </div>
 
-          <div id="sidebar">
+          <div id="sidebar" class="col-sm-4">
             <div id="header_sidebar">
               <h2 id="h2_news">Neuigkeiten</h2>
             </div>

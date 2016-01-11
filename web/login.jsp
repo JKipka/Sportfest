@@ -7,7 +7,15 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<link rel="stylesheet" href="http://localhost:88/sportfest/styles.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="http://localhost:8080/styles.css">
 <head>
     <title>Anmelden</title>
     <script type="text/javascript">
@@ -43,7 +51,7 @@
                     </ul>
                 </div> <!--Navi Bar Ende**-->
 
-                <div id="main_container">
+                <div id="main_container" class="col-sm-8">
                     <div id="container_form_login">
                     <h2>Anmelden</h2>
                     <form action="/anmelden" method="post">
@@ -63,28 +71,42 @@
 
                     <div id="container_form_register">
                         <h2>Registrieren</h2>
-                        <form action="/registrieren" onsubmit="return myFunction()" method="post">
-                            Vorname:<br>
-                            <input type="text" name="vorname">
+                        <br>
+                        <form role="form" action="/registrieren" onsubmit="return myFunction()" method="post">
+                            <div class="form-group">
+                                 <label>Vorname:</label>
+                                 <input type="text" class="form-control" name="vorname">
+                            </div>
                             <br><br>
-                            Nachname:<br>
-                            <input type="text" name="nachname">
+                            <div class="form-group">
+                                <label>Nachname:</label>
+                                <input type="text" class="form-control" name="nachname">
+                            </div>
                             <br><br>
-                            E-Mail:<br>
-                            <input type="text" name="mail">
+                            <div class="form-group">
+                                <label>E-Mail::</label>
+                                <input type="email" class="form-control" name="mail">
+                            </div>
                             <br><br>
-                            Passwort:<br>
-                            <input id="pass1" type="password" name="passwort">
-                            <br><br>
-                            Passwort bestätigen:<br>
-                            <input id="pass2" type="password" name="passwort_conf">
-                            <br><br>
-                            Verein:<br>
-                            <input type="text" name="verein">
-                            <br><br>
-                            <input type="submit" value="Registrieren">
-                            <br>
 
+                            <div class="form-group">
+                                <label>Passwort:</label>
+                                <input id="pass" type="password" class="form-control" name="passwort">
+                            </div>
+                            <br><br>
+
+                            <div class="form-group">
+                                <label>Passwort bestätigen:</label>
+                                <input id="pass2" type="password" class="form-control" name="passwort_conf">
+                            </div>
+                            <br><br>
+
+                            <div class="form-group">
+                                <label>Verein:</label>
+                                <input type="text" class="form-control" name="verein">
+                            </div>
+                            <br><br>
+                            <input class="btn btn-default" type="submit" value="Registrieren">
 
                             <!--SCRIPT FOR CHECKING PASSWORDS-->
                             <script>
@@ -110,7 +132,7 @@
 
                 </div>
 
-                <div id="sidebar">
+                <div id="sidebar" class="col-sm-4">
                     <div id="header_sidebar">
                         <h2 id="h2_news">Neuigkeiten</h2>
                     </div>

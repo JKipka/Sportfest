@@ -15,6 +15,8 @@
             request.getRequestDispatcher("/login.jsp").forward(request,response);
         }else if(loginSession == "Logout"){
             request.getRequestDispatcher("/logout.jsp").forward(request,response);
+        }else{
+            request.getRequestDispatcher("/login.jsp").forward(request,response);
         }
     %>
 </head>
