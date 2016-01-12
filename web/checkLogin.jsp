@@ -14,7 +14,7 @@
         if (loginSession == "Login"){
             request.getRequestDispatcher("/login.jsp").forward(request,response);
         }else if(loginSession == "Logout"){
-            request.getRequestDispatcher("/logout.jsp").forward(request,response);
+            request.getRequestDispatcher("/servlets/logout.jsp").forward(request,response);
         }else{
             request.getRequestDispatcher("/login.jsp").forward(request,response);
         }

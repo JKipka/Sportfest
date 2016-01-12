@@ -28,6 +28,16 @@
         <servlet-name>HundertAdd</servlet-name>
         <servlet-class>Database.HundertAdd</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>Password</servlet-name>
+        <servlet-class>Database.Password</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ImageUpload</servlet-name>
+        <servlet-class>Database.ImageUpload</servlet-class>
+    </servlet>
     
     <servlet-mapping>
         <servlet-name>JDBC</servlet-name>
@@ -50,8 +60,18 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>HundertAdd</servlet-name>
-        <url-pattern>/hundertadd</url-pattern>
+    <servlet-name>HundertAdd</servlet-name>
+    <url-pattern>/hundertadd</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Password</servlet-name>
+        <url-pattern>/password</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ImageUpload</servlet-name>
+        <url-pattern>/imageupload</url-pattern>
     </servlet-mapping>
 
 </web-app>

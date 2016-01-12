@@ -20,6 +20,8 @@ public class Anmelden extends HttpServlet {
 
         Object password = req.getParameter("passwort");
         HttpSession session = req.getSession();
+        DatabaseCon dbCon = new DatabaseCon();
+        Connection con;
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -29,28 +31,12 @@ public class Anmelden extends HttpServlet {
         }
 
         try {
+            con = dbCon.getDBCon();
 
-            Connection connection = null;
+            if (dbCon!=null){
 
-            try {
-
-            } catch (Exception e) {
-
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                JOptionPane
-                        .showMessageDialog(
-                                null,
-                                "Error while connecting to SQL Database. Check your database choice from the dropdown list.\n Description: "
-                                        + e.toString());
-            }
-            connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/sportfest", "root", "");
-            boolean success = checkLogIn(connection, mail, password);
-            if (success){
-                isLoggedIn = success;
                 Cookie currentUser = new Cookie("user", (String) mail);
-                currentUser.setMaxAge(60*15); //Session Länge des Users bei 15 Minuten, danach ist ein neuer Log-In nötig
+                currentUser.setMaxAge(60*10); //Session Länge des Users bei 15 Minuten, danach ist ein neuer Log-In nötig
                 req.setAttribute("message", "Anmeldung erfolgreich!");
                 req.setAttribute("mail", mail);
                 session.setAttribute("login","Logout"); //Logout wird als Linktext angezeigt
@@ -73,15 +59,13 @@ public class Anmelden extends HttpServlet {
                 if (sparte!=null){
                     resp.sendRedirect(sparte+".jsp");
                 }else{
-                    resp.sendRedirect("login_home.jsp");
+                    req.getRequestDispatcher("userprofile.jsp?user="+mail).forward(req,resp);
                 }
 
-                req.getRequestDispatcher("anmeldung_erfolgreich.jsp").forward(req, resp);
-                System.out.println(success);
             }else{
                 isLoggedIn = false;
                 req.setAttribute("message", "Anmeldung fehlgeschlagen. Benutzername oder Passwort ist falsch");
-                req.getRequestDispatcher("anmeldung_fehlgeschlagen.jsp").forward(req,resp);
+                req.getRequestDispatcher("login.jsp").forward(req,resp);
             }
 
 

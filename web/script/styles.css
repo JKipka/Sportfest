@@ -1,14 +1,12 @@
-﻿.main{
+﻿#main{
 	background-color:white;
-	width:950px;
-	
+	width:1150px;
 	position:relative;
 }
 
 body{
 	font-family:"Arial";
-	background:#FAF852;
-	
+	background-size: cover;
 }
 	#header_main{
 		background-color:#F9F9ED;
@@ -16,8 +14,8 @@ body{
 		height:40px;
 		display:inline;
 	}
-	
-	
+
+
 	#navi_bar{
 		background:#333;
 		width:100%;
@@ -39,10 +37,7 @@ body{
 	#navi_bar li:last-child {
     border-right: none;
 	}
-	
-	.active {
-    background-color: #4CAF50;
-	}
+
 
 	#navi_bar a {
     display: block;
@@ -105,11 +100,7 @@ body{
 			#sidebar {
 
 				height:650px;
-				overflow-x:hidden;
-				float:right;
 				background:#F9F9ED;
-				display:inline;
-				position:absolute;
 				overflow-y: scroll;
 			}
 			

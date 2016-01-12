@@ -12,24 +12,19 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="http://localhost:8080/styles.css">
+
+
+
 <head>
-    <title>Anmeldung erfolgreich</title>
-    <script type="text/javascript">
-        function oeffnefenster (url) {
-            fenster = window.open(url, "fenster1", "width=900,height=400,status=yes,scrollbars=yes,resizable=yes");
-            fenster.focus();
-        }
-    </script>
+    <title>Passwort ändern</title>
 
+    <script src="script/jquery-1.12.0.min.js"></script>
+    <script src="script/bootstrap.js"></script>
+    <script src="script/validate.js"></script>
+    <link rel="stylesheet" type="text/css" href="script/bootstrap.css">
+    <link rel="stylesheet" href="script/styles.css">
 
 
     <%
@@ -38,10 +33,10 @@
         Connection con = dbCon.getDBCon();
         String query;
         Statement s;
-        String pw;
+        String pw = "";
         ResultSet rS = null;
         if (user!=null){
-            request.setAttribute("user", user);
+            session.setAttribute("user", user);
             query = "SELECT (Passwort) FROM mitglieder WHERE Email='"+user+"'";
             s = con.createStatement();
             rS = s.executeQuery(query);
@@ -55,71 +50,97 @@
 
     %>
 
-    <!--SCRIPT FOR CHECKING PASSWORDS-->
-    <script>
-        function myFunction() {
-            var passAct = ${pw};
-            var passOld = document.getElementById("passOld").value();
-            var pass1 = document.getElementById("passNew").value;
-            var pass2 = document.getElementById("passConf").value;
-            var ok = true;
-
-            if(passAct == passOld){
-                if (pass1 != pass2) {
-                    //Passwordfelder rot markieren
-                    document.getElementById("pass1").style.borderColor = "#E34234";
-                    document.getElementById("pass2").style.borderColor = "#E34234";
-                    ok = false;
-                }
-
-                return ok;
-            }else{
-                document.getElementById("passOld").style.borderColor = "#E34234";
-                ok = false;
+    <%
+        String profil1 = (String) session.getAttribute("profil");
+        if (profil1==null){session.setAttribute("profil", "");} //wenn noch keine Session-Variable gesetzt wurde
+        String login1 = (String) session.getAttribute("login");
+        if (login1!=null){ //wenn eine Login-Variable gesetzt wurde
+            if (login1=="Login"){
+                //User ist ausgeloggt
+            }else if(login1=="Logout"){
+                //User ist eingeloggt
+                session.setAttribute("profil", "Mein Profil");
             }
-            return ok;
-
-
         }
-    </script>
-    <!--END SCRIPT-->
+
+    %>
+
+
 
 </head>
-<body>
+<body background="images/system/ball.jpg">
 <table align="center">
     <tr>
         <td>
-            <div class="main">
+            <div class="row" id="main">
                 <div id="header_main">
                     <h1>Bundes-Jugend-Spiele Zuckerberg 2015</h1>
                 </div>
 
                 <div id="main_container" class="col-sm-12">
                     <div id="container_form_register">
-                        <form role="form" action="/check.jsp?user=<%=user%> method="post">
+                        <form role="form" data-toggle="validator" id="submit-form" action="/password" method="post">
                             <div class="form-group">
                                 <label>Altes Passwort:</label>
-                                <input type="password" class="form-control" name="passOld">
+                                <input type="password" class="form-control" id="pass" name="pass" value=<%=pw%> required readonly>
+                                <br>
+                                <label>Altes Passwort:</label>
+                                <input type="password" class="form-control" name="passOld" data-match="#pass" data-match-error="Passwörter stimmen nicht überein." required>
+                                <div class="help-block with-errors"></div>
                             </div>
                             <br>
                             <div class="form-group">
-                                <label>Neues Passwort:</label>
-                                <input type="password" class="form-control" name="passNew">
+                                <label for="inputPassword">Neues Passwort:</label>
+                                <input type="password" id="inputPassword" class="form-control" name="passNew" required>
+                                <br>
+                                <label for="inputPasswordConf">Neues Passwort bestätigen:</label>
+                                <input type="password" class="form-control" name="passConf" id="inputPasswordConf" data-match="#inputPassword" data-match-error="Passwörter stimmten nicht überein" required>
+                                <div class="help-block with-errors"></div>
                             </div>
                             <br>
-                            <div class="form-group">
-                                <label>Neues Passwort bestätigen:</label>
-                                <input type="password" class="form-control" name="passConf">
-                            </div>
-                            <br>
-                            <input class="btn btn-default" type="submit" value="Bestätigen">
-
-
+                            <input class="btn btn-default" id="submit-btn" type="submit" value="Bestätigen">
                         </form>
+
+
+
+
+                        <!--SCRIPT FOR CHECKING PASSWORDS-->
+                            <script type="text/javascript">
+                                function myFunction() {
+
+
+
+                                    var passAct = ${pw};
+                                    var passOld = document.getElementById("passOld").value();
+                                    var pass1 = document.getElementById("passNew").value;
+                                    var pass2 = document.getElementById("passConf").value;
+                                    var ok = true;
+
+                                    if(passAct == passOld){
+                                        if (pass1 != pass2) {
+                                            //Passwordfelder rot markieren
+                                            document.getElementById("passNew").style.borderColor = "#E34234";
+                                            document.getElementById("passConf").style.borderColor = "#E34234";
+                                            ok = false;
+                                        }
+
+                                        return ok;
+                                    }else{
+                                        document.getElementById("passOld").style.borderColor = "#E34234";
+                                        ok = false;
+                                    }
+                                }
+                            </script>
+                            <!--END SCRIPT-->
+
+
+
 
                     </div>
 
                 </div>
+
+
 
             </div>
         </td>

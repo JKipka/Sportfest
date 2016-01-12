@@ -11,24 +11,17 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="http://localhost:8080/styles.css">
 <head>
 
+    <script src="script/jquery-1.12.0.min.js"></script>
+    <script src="script/bootstrap.js"></script>
+    <script src="script/validate.js"></script>
+    <link rel="stylesheet" type="text/css" href="script/bootstrap.css">
+    <link rel="stylesheet" href="script/styles.css">
+
     <title>Anmelden</title>
-    <script type="text/javascript">
-        function oeffnefenster (url) {
-            fenster = window.open(url, "fenster1", "width=900,height=400,status=yes,scrollbars=yes,resizable=yes");
-            fenster.focus();
-        }
-    </script>
+
 
     <%
         //USER-INFORMATIONEN HOLEN
@@ -43,11 +36,11 @@
         ResultSet rS = null;
         Statement s = null;
         String query = null;
-        if (con!=null){
-            query = "SELECT * FROM mitglieder WHERE Email='"+user+"'";
-            s= con.createStatement();
+        if (con != null) {
+            query = "SELECT * FROM mitglieder WHERE Email='" + user + "'";
+            s = con.createStatement();
             rS = s.executeQuery(query);
-            while(rS.next()){
+            while (rS.next()) {
                 vorname = rS.getString(1);
                 nachname = rS.getString(2);
                 password = rS.getString(5);
@@ -63,155 +56,182 @@
         }
 
     %>
+
+    <%
+        String userLog = (String) session.getAttribute("loggedUser");
+        String login = (String) session.getAttribute("login");
+        if (userLog==null){session.setAttribute("loggedUser", "");}
+        if (login==null) {session.setAttribute("login", "");}
+        login = (String) session.getAttribute("login");
+        Cookie[] cookies = request.getCookies();
+
+        boolean userLoggedIn = false;
+
+        if (cookies!=null){
+            for(Cookie cookie1 : cookies){
+                if (cookie1.getName().equals("user")) {
+                    //wenn User-Cookie existiert
+                    userLoggedIn = true;
+                    String user3 = cookie1.getValue();
+                    session.setAttribute("loggedUser", user3);
+                }
+            }
+        }
+
+        if (!userLoggedIn){
+            session.setAttribute("login", "Login"); //Kein User kann eingeloggt sein, wenn oben geprüfter Cookie nicht existiert
+        }else{
+            session.setAttribute("login", "Logout");
+        }
+
+
+
+    %>
+
+    <%
+        String profil1 = (String) session.getAttribute("profil");
+        if (profil1==null){session.setAttribute("profil", "");} //wenn noch keine Session-Variable gesetzt wurde
+        String login1 = (String) session.getAttribute("login");
+        if (login!=null){ //wenn eine Login-Variable gesetzt wurde
+            if (login=="Login"){
+                //User ist ausgeloggt
+            }else if(login=="Logout"){
+                //User ist eingeloggt
+                session.setAttribute("profil", "Mein Profil");
+            }
+        }
+
+    %>
+
 </head>
-<body>
+<body background="images/system/ball.jpg">
 <table align="center">
     <tr>
         <td>
-            <div class="main">
-                <div id="header_main">
-                    <h1>Bundes-Jugend-Spiele Zuckerberg 2015</h1>
-                </div>
+            <div class="row" id="main">
 
-                <div id="navi_bar">
-                    <ul>
-                        <li class="active"><a href="index.jsp">Home</a></li>
-                        <li><a href="termine.jsp">Termine</a></li>
-                        <li><a href="vereine.jsp">Vereine</a></li>
-                        <li><a href="wettkaempfe.jsp">Wettkämpfe</a></li>
-                        <li><a href="galerie.jsp">Galerie</a></li>
-                        <li><a href="kontakt.jsp">Kontakt</a></li>
-                        <li><a href="historie.jsp">Historie</a></li>
-                        <li><a href="impressum.jsp">Impressum</a></li>
-                        <ul style="float:right;list-style-type:none;">
+
+                <nav class="navbar navbar-inverse">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="index.jsp">Sportfest Hessen</a>
+                        </div>
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="index.jsp">Home</a></li>
+                            <li><a href="termine.jsp">Termine</a></li>
+                            <li><a href="vereine.jsp">Vereine</a></li>
+                            <li><a href="wettkaempfe.jsp">Wettkämpfe</a></li>
+                            <li><a href="galerie.jsp">Galerie</a></li>
+                            <li><a href="kontakt.jsp">Kontakt</a></li>
+                            <li><a href="impressum.jsp">Impressum</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="userprofile.jsp?user=<%=session.getAttribute("loggedUser")%>"><%=session.getAttribute("profil")%></a></li>
                             <li><a href="/checkLogin.jsp"><%=session.getAttribute("login")%></a></li>
                         </ul>
+                    </div>
+                </nav>
+
+                <!--
+
+                <div id="navi_bar">
+                  <ul>
+                    <li class="active"><a href="index.jsp">Home</a></li>
+                    <li><a href="termine.jsp">Termine</a></li>
+                    <li><a href="vereine.jsp">Vereine</a></li>
+                    <li><a href="wettkaempfe.jsp">Wettkämpfe</a></li>
+                    <li><a href="galerie.jsp">Galerie</a></li>
+                    <li><a href="kontakt.jsp">Kontakt</a></li>
+                    <li><a href="historie.jsp">Historie</a></li>
+                    <li><a href="impressum.jsp">Impressum</a></li>
+                    <ul style="float:right;list-style-type:none;">
 
                     </ul>
+
+                  </ul>
                 </div> <!--Navi Bar Ende**-->
 
 
-
                 <div id="main_container" class="col-sm-8">
-                    <h2 style="padding-left: 10px">Benutzer-Informationen</h2>
-                    <div style="float: left" id="container_list_user_information_editable" class="col-sm-4">
-                        <ul>
-                            <br>
-                            <p>
-                            <li>Vorname:     <input type="text" value=${vorname}></li>
-                            <br>
-                            <li>Nachname:    <input type="text" value=${nachname}></li>
-                            <br>
-                            <li>Verein:      <input type="text" value=${verein}></li>
-                            </p>
-                            <br>
-                        </ul>
-                    </div>
+                    <h2 style="padding-left: 5px">Benutzerprofil</h2>
+                    <div id="container_list_user_information_editable">
+                        <form role="form" id="user_form" action="changeUserInformation.jsp" method="get">
+                            <div id="headline">
+                                <h3>Persönliche Informationen</h3>
+                            </div>
 
-                    <div style="float: right" id="container_list_user_information_uneditable" class="col-sm-4">
-                            <ul style="float: right">
-                                <br>
-                                <p>
-                                <li>E-Mail: ${mail}</li>
-                                <br>
-                                <input type="submit" class="btn btn-default" value="E-Mail-Adresse ändern" onclick="">
-                                <br>
-                                <br>
-                                <li>Passwort: <input type="password" value="abcdefgh" readonly></li>
-                                <br>
-                                </p>
-                                <input type="button" class="btn btn-default" id="btn_submit" value="Password ändern" onclick=window.open("http://localhost:8080/changePassword.jsp?user=${mail}");>
-                                <br>
-                            </ul>
+                            <div class="form-group">
+                                <label>Vorname:</label>
+                                <input class="form-control" type="text"name="vorname" value="${vorname}">
+                            </div>
 
+                            <div class="form-group">
+                                <label>Nachname:</label>
+                                <input class="form-control" type="text" name="nachname" value="${nachname}">
+                            </div>
 
+                            <div class="form-group">
+                                <label>Verein:</label>
+                                <input class="form-control" type="text" name="verein" value="${verein}">
+                            </div>
 
-
-
-                    </div>
-
-                    <div style="display: none" id="passwordChange">
-                        <form action="" onsubmit="return myFunction()">
-                            <br>
-                            Altes Passwort eingeben: <input type="password" id="passwordOld">
-                            <br>
-                            Neues Passwort eingeben: <input type="password" id="pass1">
-                            <br>
-                            Neues Passwort wiederholen: <input type="password" id="pass2">
-                            <br>
-                            <br>
-                            <input type="submit" value="Bestätigen">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-default" value="Speichern">
+                            </div>
 
                         </form>
 
                     </div>
 
+                    <br>
 
-                    <!--SCRIPT FOR CHECKING PASSWORDS-->
-                    <script>
-                        function myFunction() {
-                            var passOld = "<%=password%>"
-                            var passInput = document.getElementById("passwordOld").value;
-                            if (passOld == passInput){
-                                var pass1 = document.getElementById("pass1").value;
-                                var pass2 = document.getElementById("pass2").value;
-                                var ok = true;
-                                if (pass1 != pass2) {
-                                    //Passwordfelder rot markieren
-                                    document.getElementById("pass1").style.borderColor = "#E34234";
-                                    document.getElementById("pass2").style.borderColor = "#E34234";
-                                    ok = false;
-                                }
+                    <div id="container_list_user_information_uneditable">
 
+                        <div id="head_acc">
+                            <h3>Account-Informationen</h3>
+                        </div>
 
-                            }else{
-                                document.getElementById("passwordOld").style.borderColor = "#E34234";
-                                ok = false;
-                            }
-                            return ok;
-                        }
-                    </script>
-                    <!--END SCRIPT-->
+                        <div class="form-group">
+                            <label for="changemail" name="email">E-Mail: ${mail}</label>
+                            <form role="form" action="" method="get">
+                                <input type="submit" class="btn btn-default" id="changemail"
+                                       value="E-Mail-Adresse ändern">
+                            </form>
+                        </div>
 
-                    <script>
-                        function ShowPasswordChangeDiv(state){
-                            if (state == 'none')
-                                document.getElementById('passwordChange').style.display = 'block';
-                            else
-                                document.getElementById('passwordChange').style.display = 'none';
+                        <br>
 
-                        }
+                        <div class="form-group">
+                            <label>Passwort:</label>
+                            <form role="form" action="http://localhost:8080/changePassword.jsp?user=${mail}"
+                                  method="post">
+                                <div class="form-group">
+                                    <input type="password" class="btn btn-default" value="password" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-default" id="btn-submit"
+                                           value="Passwort ändern">
+                                </div>
+                            </form>
+                        </div>
 
-                    </script>
+                        <!--
+                                <li>E-Mail: </li>
+                                <br>
+                                <input type="submit" class="btn btn-default" value="E-Mail-Adresse ändern" onclick="">
+                                </form>
+                                <br>
+                                <br>
+                                <form role="form" action="http://localhost:8080/changePassword.jsp?user=${mail}" method="post">
+                                <li>Passwort: <input type="password" value="abcdefgh" readonly></li>
+                                <br>
 
+                                <input type="submit" class="btn btn-default" id="btn_submit" value="Password ändern">
+                                </form>
+                                -->
 
-                    <script>
-                        function PromptPasswordNew(){
+                    </div>
 
-
-
-                            var pass = "${passwort}";
-                            while(true){
-                                var passOld = prompt("Altes Passwort eingeben:");
-                                var passNew = prompt("Neues Passwort eingeben:");
-                                var passNewRep = prompt("Neues Passwort wiederholen:");
-
-                                if (passOld == pass){
-                                    if(passNew == passNewRep){
-                                       break;
-                                    }else{
-                                        alert("Die neuen Passwörter stimmen nicht überein.");
-
-                                    }
-                                }else{
-                                    alert("Das alte Passwort stimmt nicht.")
-                                }
-                            }
-
-
-                        }
-
-                    </script>
 
                 </div>
 
@@ -223,12 +243,26 @@
                     <div id="main_sidebar">
                         <div class="artikel">
                             <h3>Lorem mfka</h3>
-                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+                                accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                                sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+                                sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                                aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+                                rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+                                amet.</p>
                         </div>
 
                         <div class="artikel">
                             <h3>Lorem mfka</h3>
-                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+                                accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                                sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+                                sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                                aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+                                rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+                                amet.</p>
                         </div>
                     </div>
 
@@ -238,8 +272,6 @@
         </td>
     </tr>
 </table>
-
-
 
 
 </body>

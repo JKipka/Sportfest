@@ -110,6 +110,10 @@ public class DBConnection extends HttpServlet {
 
     }
 
+    public DBConnection(){
+
+    }
+
     private void sendConfirmationMail(Object mail, Object vorname, String token){
         try {
             String empfaenger = (String) mail;
